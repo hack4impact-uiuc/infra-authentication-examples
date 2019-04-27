@@ -1,6 +1,7 @@
 import { Component } from "react";
 import withAuth from "../components/withAuth";
 import NavBar from "../components/navbar";
+import VerifyEmailCard from "../components/verifyEmailCard";
 import {
   Dropdown,
   DropdownItem,
@@ -117,31 +118,6 @@ class ProfilePage extends Component {
       }
     } else {
       this.setState({ responseMessage: "Passwords do not match" });
-    }
-  };
-
-  handleEmail = async e => {
-    e.preventDefault();
-    const result = await resendPIN();
-    const resp = await result.json();
-    this.setState({ verificationMessage: resp.message });
-  };
-
-  handlePin = async e => {
-    e.preventDefault();
-    if (this.state.pin.trim().length > 0) {
-      const result = await verifyPIN(parseInt(this.state.pin));
-      const resp = await result.json();
-      this.setState({ verificationMessage: resp.message });
-      if (resp.status === 200) {
-        this.setState({
-          info: {
-            email: this.state.info.email,
-            role: this.state.info.role,
-            verification: true
-          }
-        });
-      }
     }
   };
 
@@ -295,45 +271,7 @@ class ProfilePage extends Component {
                 </Form>
               </CardBody>
             </Card>
-            {this.state.info &&
-            this.state.info.verification &&
-              String(this.state.info.verification) == "true" ? null : (
-              <Card
-                className="interview-card"
-                style={{ width: "400px", height: "60%" }}
-              >
-                <CardBody>
-                  <Form>
-                    <FormGroup>
-                      <Label>Verification Pin</Label>
-                      <Input
-                        name="pin"
-                        maxLength="128"
-                        value={this.state.pin}
-                        onChange={this.handleChange}
-                        required
-                      />
-                    </FormGroup>
-                    <Button
-                      color="success"
-                      size="lg"
-                      onClick={this.handleEmail}
-                      style={{ float: "left", width: "49%" }}
-                    >
-                      Resend Email
-                    </Button>
-                    <Button
-                      color="success"
-                      size="lg"
-                      onClick={this.handlePin}
-                      style={{ float: "right", width: "49%" }}
-                    >
-                      Submit Pin
-                    </Button>
-                  </Form>
-                </CardBody>
-              </Card>
-            )}
+            <VerifyEmailCard info={this.state.info}/> 
           </Row>
         )}
       </div>
