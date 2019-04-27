@@ -172,7 +172,7 @@ class ProfilePage extends Component {
             <li>
               Verification: You are{" "}
               {this.state.info.verification &&
-              this.state.info.verification != "undefined"
+              String(this.state.info.verification) == "true"
                 ? ""
                 : "not "}
               verified
@@ -297,7 +297,7 @@ class ProfilePage extends Component {
             </Card>
             {this.state.info &&
             this.state.info.verification &&
-            this.state.info.verification != "undefined" ? null : (
+              String(this.state.info.verification) == "true" ? null : (
               <Card
                 className="interview-card"
                 style={{ width: "400px", height: "60%" }}
