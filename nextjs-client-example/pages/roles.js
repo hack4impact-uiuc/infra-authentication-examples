@@ -15,6 +15,7 @@ import {
   Label,
   Input
 } from "reactstrap";
+import { getCookie } from "../utils/cookie";
 
 class RolesPage extends Component {
   state = {
@@ -119,6 +120,7 @@ class RolesPage extends Component {
                 ))}
               </tbody>
             </Table>
+            {!getCookie("google") ?
             <div align="left" style={{ display: "inline", width: "300px" }}>
               <FormGroup size="sm">
                 <Label for="examplePassword">Confirm Password</Label>
@@ -131,6 +133,8 @@ class RolesPage extends Component {
                 />
               </FormGroup>
             </div>
+            : null
+            }
           </CardBody>
         </Card>
         {this.state.response}
