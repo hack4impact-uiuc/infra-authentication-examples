@@ -78,9 +78,9 @@ function setSecurityQuestion(questionIdx, answer, password) {
   }
 }
 
-function getSecurityQuestionForUser(email) {
+function securityQuestionForUser(email) {
   try {
-    return fetch(`http://localhost:5000/getSecurityQuestionForUser`, {
+    return fetch(`http://localhost:5000/securityQuestionForUser`, {
       method: "POST",
       body: JSON.stringify({
         email
@@ -247,7 +247,7 @@ export {
   verify,
   setSecurityQuestion,
   getSecurityQuestions,
-  getSecurityQuestionForUser,
+  securityQuestionForUser,
   submitSecurityQuestionAnswer,
   resetPassword,
   changePassword,
