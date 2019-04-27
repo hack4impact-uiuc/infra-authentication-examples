@@ -7,6 +7,17 @@ route: /register-and-login
 
 ## Register Endpoint
 
+### /POST yourserver.org/register
+
+    body: {
+        email: "whodatboy@h4i.org",
+        password: "me",
+        questionIdx: 4,
+        role: "guest",
+        answer: "Mambo No. 5"
+    }
+
+
 | Endpoint | /register [POST] |
 | ------ | ----------- |
 | Body   | email, hashed password, amd role |
@@ -28,7 +39,15 @@ route: /register-and-login
 (7) The API sends the token to the client. The client stores the token in cookies and sends it in the header of every request. 
 
 
+
 ## Login Endpoint
+
+### /POST yourserver.org/login
+
+    body: {
+        email: "whodatboy@h4i.org",
+        password: "me"
+    }
 
 | Endpoint | /login [POST] |
 | ------ | ----------- |
