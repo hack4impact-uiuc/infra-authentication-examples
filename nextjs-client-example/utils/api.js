@@ -51,8 +51,7 @@ function getSecurityQuestions() {
     return fetch("http://localhost:5000/getSecurityQuestions", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        token: getCookie("token")
+        "Content-Type": "application/json"
       }
     });
   } catch (err) {
