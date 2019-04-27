@@ -20,7 +20,7 @@ route: /register-and-login
 
 | Endpoint | /register [POST] |
 | ------ | ----------- |
-| Body   | email, hashed password, amd role |
+| Body   | email, password, amd role, security question answer, security question index in config file  |
 | Response 200 | userid, role, and token |
 | Response 400 | error message |
 
@@ -51,7 +51,7 @@ route: /register-and-login
 
 | Endpoint | /login [POST] |
 | ------ | ----------- |
-| Body   | email, hashed password |
+| Body   | email, password |
 | Response 200 | userid, role, and token |
 | Response 400 | error message |
 

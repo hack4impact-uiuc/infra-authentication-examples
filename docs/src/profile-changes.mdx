@@ -27,18 +27,63 @@ route: /profile-changes
 
 ## Change Password Endpoint
 
-| Endpoint | / [POST] |
+### /POST yourserver.org/changePassword
+
+    headers: {
+        token: "jrr tolkein"
+    }
+    body: {
+        currentPassword: "myOlPassword",
+        newPassword: "wiefhweiofh20934u90324hnoedn"
+    }
+    
+| Endpoint | /changePassword [POST] |
 | ------ | ----------- |
 | Header | token |
-| Body   | password |
+| Body   | currentPassword, newPassword|
 | Response 200 | success message |
 | Response 400 | error message |
 
-(1) If the request doesn't have a token or passwword, it sends the response "Malformed Request"
+(1) If the request doesn't have a token or passwword, it sends a 400 code response
 
-(2) If the token isn't valid, it will return the error message "Invalid token"
+(2) If the token isn't valid, it will return the error message "Invalid token" with a 400 code response
 
 (3) If the user doesn't exist, it will return the error message "User doesn't exist"
 
-(4) The password is sucessfully reset in the model. It responds with the success message "Successful change of password!" and the new token.  
+(4) The password is sucessfully changed in the model. It responds with the success message "Successful change of password!" and the new token.  
+
+
+## Reset Password Endpoint
+
+### /POST yourserver.org/resetPassword
+
+    body: {
+        pin: "42069", (optional)
+        answer: "Mambo No. 5", (optional)
+        email: "datboy@h4i.org",
+        password: "newPassword",
+    }
+
+| Endpoint | /resetPassword [POST] |
+| ------ | ----------- |
+| Body   | password, email, answer, pin |
+| Response 200 | success message |
+| Response 400 | error message |
+
+(1) If the request doesn't have a password or email it sends a 400 code response
+
+(1a) If the security question option in the auth db is configured and an answer is not specified it returns a 400 code
+
+(1b) If gmail is enabled in the auth db and a pin is not specified it returns a 400 code error
+
+(2) If the user doesn't exist, it will return the error message "User doesn't exist"
+
+(3) If a pin is provided and it does not match with the pin in the database then a 400 code response is sent
+
+(3a) If the pin is expired, or the database does not have an expiration field set, then a 400 code is sent
+
+(4) If the answer is provided and does not match with the answer in the database then a 400 code is sent
+
+(5) If the request passes through the checks in 1-4, the password is sucessfully changed in the model. It responds with the success message "Successful change of password!" and the new token
+
 
