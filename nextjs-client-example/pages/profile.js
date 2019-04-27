@@ -67,18 +67,6 @@ class ProfilePage extends Component {
     }
   };
 
-  //  getInfo = async () => {
-  //   const result = await userInfo();
-  //   const response = await result.json();
-  //   this.setState({
-  //     info: {
-  //       email: response.user_email,
-  //       role: response.user_role,
-  //       verification: response.user_verified
-  //     }
-  //   });
-  // };
-
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -91,13 +79,14 @@ class ProfilePage extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     if (this.state.questionIdx !== -1 && this.state.answer.trim().length > 0) {
-      this.setState({ submittedSecurity: true });
+      
       const result = await setSecurityQuestion(
         this.state.questionIdx,
         this.state.answer,
         this.state.securityPassword
       );
       const resp = await result.json();
+      this.setState({ submittedSecurity: true });
       if (resp.status === 200) {
         this.setState({ successSubmitSecurity: true });
       } else {
