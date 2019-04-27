@@ -7,6 +7,13 @@ route: /verify-email
 
 ## Resend Verification
 
+
+### /POST yourserver.org/resendVerificationEmail
+    headers: {
+        token: "jrr tolkien"
+    }
+    body: {
+    }
 | Endpoint | /resendEmail [POST] |
 | ------ | ----------- |
 | Header   | token |
@@ -26,6 +33,15 @@ route: /verify-email
 (6) Responds with a success message "Verification email sent"
 
 ## Verify Email Endpoint
+
+### /POST yourserver.org/verifyEmail 
+    headers: {
+        token: "jrr tolkien"
+    }
+    body: {
+        pin: 69420
+    }
+
 | Endpoint | /verifyEmail [POST] |
 | ------ | ----------- |
 | Body   | email, pin |
