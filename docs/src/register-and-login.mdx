@@ -1,9 +1,9 @@
 ---
-name: Register and Login
-route: /register-and-login
+name:  Register/Login Workflow 
+route: /register-and-login-workflow
 ---
 
-# Register and Login
+# Register/Login Workflow Endpoints
 
 ## Register Endpoint
 
@@ -29,20 +29,18 @@ route: /register-and-login
 (7) Signs the jwt token, and the sends the signed token to the user along with the user's id and permission level
 
 
-Example Request 
+### Example Request 
 
-    { 
-        url: "http://localhost:8000/register"
-        headers: {
-            "Content-Type":"application/json",
-        }
-        body: {
-            "email":"whodatboy@h4i.org",
-            "password":"me",
-            "role":"guest",
-            "questionIdx":0, // Don't include if security question is not enabled
-            "answer":"Mambo No. 5" // Don't include if security question is not enabled
-        }
+    url: "http://localhost:8000/register"
+    headers: {
+        "Content-Type":"application/json",
+    }
+    body: {
+        "email":"whodatboy@h4i.org",
+        "password":"me",
+        "role":"guest",
+        "questionIdx":0, // Don't include if security question is not enabled
+        "answer":"Mambo No. 5" // Don't include if security question is not enabled
     }
 
 
@@ -51,24 +49,82 @@ Example Request
 
 ## Login Endpoint
 
-### /POST yourserver.org/login
-
-    body: {
-        email: "whodatboy@h4i.org",
-        password: "me"
-    }
-
 | Endpoint | /login [POST] |
 | ------ | ----------- |
 | Body   | email, password |
 | Response 200 | userid, role, and token |
 | Response 400 | error message |
 
-1. The Authentictaion Server recieves an email and password.  It responds with a 400 error if any of the arguments aren't there. 
-2. Finds the user in the database using the email. If the user doesn't exits or te user is using google oauth, it returns a corresponding error message. 
-3. It encrypts the password and compares it to the password stored in the database. 
-4. It sends a valid jwt token, user id, and permission level to the API. 
-5. The API sends the token to the client. The client stores the token in cookies and sends it in the header of every request. 
+(1) Checks that the request has the required fields (email, password) 
+
+(2) Find a user with the associated email and check that he/she isn't a google user
+
+(3) Compares the encrypted passwords and either returns the appropriate error message or a a success status along with the user's token, id, and permission level
+ 
+
+### Example Request 
+
+
+    url: "http://localhost:8000/login"
+    headers: {
+        "Content-Type":"application/json",
+    }
+    body: {
+        "email":"whodatboy@h4i.org",
+        "password":"me",
+    }
 
 
 
+## Resend Verification
+
+
+| Endpoint | /resendEmail [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Response 200 | success message |
+| Response 400 | error message |
+
+(1) If gmail is not enabled, it returns an error message
+
+(2) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
+
+(3) Will generate a pin and send it in an email to the user. Sends a success or error message based on if the email is succesfully sent. 
+
+### Example Request 
+
+    url: "http://localhost:8000/resendVerificationEmail"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien"
+    }
+
+
+## Verify Email 
+
+| Endpoint | /verifyEmail [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Body   | pin |
+| Response 200 | success message |
+| Response 400 | error message |
+
+(1) If gmail is not enabled, it returns an error message
+
+(2) Checks that the request has the required fields (pin) 
+
+(3) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
+
+(4) Will respond with the user succesfully verified if the pin matches, or an error message if it doesn't match. 
+
+
+### /POST yourserver.org/verifyEmail 
+    
+    url: "http://localhost:8000/resendVerificationEmail"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien"
+    }
+    body: {
+        pin: 92995525
+    }
