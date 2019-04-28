@@ -1,0 +1,61 @@
+---
+name:  Profile workflow
+route: /profile-workflow
+---
+
+# Profile Workflow
+
+## Get User Endpoint
+
+| Endpoint | /getUser [GET] |
+| ------ | ----------- |
+| Header   | token |
+| Response 200 | success message, user_email, user_verified, user_role, and user_id |
+| Response 400 | error message |
+
+(1) Return an error message if the token isn't sent
+
+(2) If it isn't a google user, verifies the token and checks that the user exists
+
+(3) If it is a google user, makes a request to the google API with the token to get the user's email, and then checks if a user with that email exists.
+
+(4) Returns the email, verification status, role, and id for the user found
+
+### Example Request 
+    
+    url: "http://localhost:8000/getUser"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien"
+    }
+
+
+## Change Password Endpoint
+
+| Endpoint | /changePassword [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Body   | currentPassword, newPassword |
+| Response 200 | success message, user_email, user_verified, user_role, and user_id |
+| Response 400 | error message |
+
+(1) Check i
+
+(1) Return an error message if the token isn't sent
+
+(2) If it isn't a google user, verifies the token and checks that the user exists
+
+(3) If it is a google user, makes a request to the google API with the token to get the user's email, and then checks if a user with that email exists.
+
+(4) Returns the email, verification status, role, and id for the user found
+
+### Example Request 
+    
+    url: "http://localhost:8000/getUser"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien"
+    }
+
+## Set Security Question Endpoint
+
