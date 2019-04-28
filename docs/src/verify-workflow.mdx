@@ -1,0 +1,30 @@
+---
+name:  Verify workflow
+route: /verify-workflow
+---
+
+# Verify Workflow
+
+## Verify Endpoint
+### erifies the token, and sends an updated JWT token if the encrypting token has been udapted
+
+# Verify
+| Endpoint | /verify [POST] |
+| ------ | ----------- |
+| Body   | tokenId |
+| Response 200 | success message, role |
+| Response 400 | error message |
+
+(1) Check that there is a tokenId in the body of the request
+
+(2) Check that google hhas been enabled
+
+(2) If the user is google authenticated, make a request the google API to get the users email.
+
+(3) Using the user's email find them in the database and return a succes message with the users role and id, or an error message if they aren't in the database.
+
+(3) If the user isn't google authentciated, it verifies their token is valid and corresponds to a user in the database
+
+(4) Check if the token has been refreshed, and if so regenerate a JWT token and return it along with the user's role, autheid, and verification status
+
+(5) Otherwise send a success message just return the user's role, authenticationId, and email verification status

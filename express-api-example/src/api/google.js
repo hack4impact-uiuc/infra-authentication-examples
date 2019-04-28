@@ -4,10 +4,8 @@ const { sendResponse } = require("./../utils/sendResponse");
 
 router.post("/google", async function(req, res) {
   const results = await fetch("http://localhost:8000/google", {
-    // change this to actual server
     method: "POST",
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json"
     },
     body: JSON.stringify({

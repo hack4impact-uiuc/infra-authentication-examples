@@ -6,12 +6,13 @@ route: /roles-workflow
 # Roles Endpoints
 
 
-## Roles
+## Roles Endpoint 
+###     Get all users that a user can promote/demote
 
 | Endpoint | /roles [GET] |
 | ------ | ----------- |
 | header   | token, google |
-| Response 200 | security question |
+| Response 200 | success message, users (each containing and role) |
 | Response 400 | error message |
 
 (1) Checks that the request has the required fields (token) 
@@ -32,8 +33,9 @@ route: /roles-workflow
     }
 
 
-## Role Change
+## Role Change Endpoint
 
+### Promote or demote a user to a different permission level 
 | Endpoint | /roleschange [POST] |
 | ------ | ----------- |
 | header   | token, google|

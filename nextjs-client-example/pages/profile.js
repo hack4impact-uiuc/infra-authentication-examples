@@ -168,7 +168,7 @@ class ProfilePage extends Component {
 
         <Card
           className="interview-card"
-          style={{ width: "25%", padding: "2%" }}
+          style={{ width: "30%", padding: "3%", margin: "auto" }}
         >
           <CardTitle>
             <h2 style={{ textAlign: "center", paddingTop: "10px" }}>
@@ -196,7 +196,6 @@ class ProfilePage extends Component {
                       ? ""
                       : "not "}
                     verified
-                    {console.log(this.state.info.verification)}
                   </p>
                 </div>
               )}
@@ -356,7 +355,7 @@ class ProfilePage extends Component {
                 >
                   <CardTitle>
                     <h4 style={{ textAlign: "center", paddingTop: "20px" }}>
-                      Verify Email {" "}
+                      Verify Email{" "}
                     </h4>
                   </CardTitle>
                   <CardBody>
