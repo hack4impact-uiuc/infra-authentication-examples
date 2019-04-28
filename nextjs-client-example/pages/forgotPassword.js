@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {
-  getSecurityQuestionForUser,
+  securityQuestionForUser,
   submitSecurityQuestionAnswer,
   resetPassword
 } from "../utils/api";
@@ -42,9 +42,8 @@ class ForgotPasswordPage extends Component {
 
   handleGetSecurityQuestion = async e => {
     e.preventDefault();
-    console.log("HHERE");
     console.log(this.state.email);
-    const result = await getSecurityQuestionForUser(this.state.email);
+    const result = await securityQuestionForUser(this.state.email);
     const resp = await result.json();
     if (!!resp.question) {
       this.setState({ question: resp.question, errorMessage: "" });
@@ -93,7 +92,7 @@ class ForgotPasswordPage extends Component {
   render = () => (
     <div>
       {this.state.errorMessage !== "" && (
-        <Alert color="danger">{this.state.errorMessage}</Alert>
+        <Alert color="primary">{this.state.errorMessage}</Alert>
       )}
       {this.state.submitNewPassword ? (
         <Card

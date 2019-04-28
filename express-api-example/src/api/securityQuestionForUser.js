@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-router.post("/getSecurityQuestionForUser", async function(req, res) {
+router.post("/securityQuestionForUser", async function(req, res) {
   const results = await fetch("http://localhost:8000/securityQuestionForUser", {
     method: "POST",
     headers: {

@@ -1,46 +1,137 @@
 ---
-name: Register and Login
-route: /register-and-login
+name:  Register/Login Workflow 
+route: /register-and-login-workflow
 ---
 
-# Register and Login
+# Register/Login Workflow Endpoints
 
 ## Register Endpoint
 
 | Endpoint | /register [POST] |
 | ------ | ----------- |
-| Body   | email, hashed password, amd role |
+| Body   | email, password, role,  index of security question in config file (optional), answer to security question (optional)  |
+
 | Response 200 | userid, role, and token |
 | Response 400 | error message |
 
-(1) If the request doesn't have a body with an email, password, and role, the request will return wit the error message "Please enter valid arguments for the fields provided."
+(1) Checks that the request has the required fields (email, password, and role) 
 
-(2) Checks that there aren't any users with the same email, otherwise returns the error message ""User already exists. Please try again." 
+(2) Ensures the user doesn't already have an account 
 
-(3) Checks that the user can sign up for that role by checking the configuration file. (eg the user can't sign up as an admin) If the user doesn't have valid permissions, it responds with ""User needs a higher permission level for that role"
+(3) Encrypts the password and creates the user's data
 
-(4) Creates a new user in the database. 
+(4) If the security question is enabled, checks that the security question index is valid and that there is an answer
 
-(5) If the config file specifies email verification, it sends an email to the user to verify their account. If the email doesn't get sent, it responds withh the error message "Verification email could not be sent despite Gmail being enabled. User not added to DB"
+(5) Checks the permission level of the user using the config file
 
-(6) It sends a valid jwt token, user id, and permission level to the API, along with the status message ""User added successfully!"
+(6) If gmail is enabled, it sends an email with a generated PIN to verify the user
 
-(7) The API sends the token to the client. The client stores the token in cookies and sends it in the header of every request. 
+(7) Signs the jwt token, and the sends the signed token to the user along with the user's id and permission level
+
+
+### Example Request 
+
+    url: "http://localhost:8000/register"
+    headers: {
+        "Content-Type":"application/json",
+    }
+    body: {
+        "email":"whodatboy@h4i.org",
+        "password":"me",
+        "role":"guest",
+        "questionIdx":0, // Don't include if security question is not enabled
+        "answer":"Mambo No. 5" // Don't include if security question is not enabled
+    }
+
+
+
+
 
 
 ## Login Endpoint
 
+### /POST yourserver.org/login
+
+    body: {
+        email: "whodatboy@h4i.org",
+        password: "me"
+    }
+
 | Endpoint | /login [POST] |
 | ------ | ----------- |
-| Body   | email, hashed password |
+| Body   | email, password |
 | Response 200 | userid, role, and token |
 | Response 400 | error message |
 
-1. The Authentictaion Server recieves an email and password.  It responds with a 400 error if any of the arguments aren't there. 
-2. Finds the user in the database using the email. If the user doesn't exits or te user is using google oauth, it returns a corresponding error message. 
-3. It encrypts the password and compares it to the password stored in the database. 
-4. It sends a valid jwt token, user id, and permission level to the API. 
-5. The API sends the token to the client. The client stores the token in cookies and sends it in the header of every request. 
+(1) Checks that the request has the required fields (email, password) 
+
+(2) Find a user with the associated email and check that he/she isn't a google user
+
+(3) Compares the encrypted passwords and either returns the appropriate error message or a a success status along with the user's token, id, and permission level
+ 
+
+### Example Request 
+
+
+    url: "http://localhost:8000/login"
+    headers: {
+        "Content-Type":"application/json",
+    }
+    body: {
+        "email":"whodatboy@h4i.org",
+        "password":"me",
+    }
 
 
 
+## Resend Verification
+
+
+| Endpoint | /resendEmail [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Response 200 | success message |
+| Response 400 | error message |
+
+(1) If gmail is not enabled, it returns an error message
+
+(2) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
+
+(3) Will generate a pin and send it in an email to the user. Sends a success or error message based on if the email is succesfully sent. 
+
+### Example Request 
+
+    url: "http://localhost:8000/resendVerificationEmail"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien"
+    }
+
+
+## Verify Email 
+
+| Endpoint | /verifyEmail [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Body   | pin |
+| Response 200 | success message |
+| Response 400 | error message |
+
+(1) If gmail is not enabled, it returns an error message
+
+(2) Checks that the request has the required fields (pin) 
+
+(3) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
+
+(4) Will respond with the user succesfully verified if the pin matches, or an error message if it doesn't match. 
+
+### Example Request 
+    
+    url: "http://localhost:8000/resendVerificationEmail"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien"
+    }
+    body: {
+        pin: 92995525
+    }

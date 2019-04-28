@@ -1,0 +1,68 @@
+---
+name:  Roles Workflow 
+route: /roles-workflow
+---
+
+# Roles Endpoints
+
+
+## Roles
+
+| Endpoint | /roles [GET] |
+| ------ | ----------- |
+| header   | token, google |
+| Response 200 | security question |
+| Response 400 | error message |
+
+(1) Checks that the request has the required fields (token) 
+
+(2) If it is not a google user, it verifies the token is valid and the user exists. 
+
+(3) If it is a google user, it makes a request to the google API using the token and fetches the email. If the user is in the database it finds it or returns an error message. 
+
+(4) Reads the config file and finds all the users that this user and promote or demote, and returns all those users emails. 
+
+### Example Request 
+    
+    url: "http://localhost:8000/roles"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien",
+        "google": "false" // "true" if it is a google user
+    }
+
+
+## Role Change
+
+| Endpoint | /roleschange [POST] |
+| ------ | ----------- |
+| header   | token, google|
+| body   | password, userEmail and newRole (of the user being promoted) |
+| Response 200 | success message |
+| Response 400 | error message |
+
+(1) Check that it has the email and new role of the user being promoted and the password
+
+(2) If it is not a google user, it verifies the token is valid, the user exists, and verify the password
+
+(3) If it is a google user, it makes a request to the google API using the token and fetches the email. If the user is in the database it finds it or returns an error message. 
+
+(4) Find the user that is being promoted and he or she is in the database
+   
+(5) If the current user has the correct permission level, promote the user or send a corresponding success or error message
+
+
+### Example Request 
+    
+    url: "http://localhost:8000/roles"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien",
+        "google": "false" // "true" if it is a google user
+    }
+    body: {
+        "userEmail":"member3@gmail.com",
+        "newRole":"supervisor", 
+        "password":"lol12345"
+    }
+

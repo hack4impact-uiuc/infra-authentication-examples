@@ -51,8 +51,7 @@ function getSecurityQuestions() {
     return fetch("http://localhost:5000/getSecurityQuestions", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        token: getCookie("token")
+        "Content-Type": "application/json"
       }
     });
   } catch (err) {
@@ -78,14 +77,14 @@ function setSecurityQuestion(questionIdx, answer, password) {
   }
 }
 
-function getSecurityQuestionForUser(email) {
+function securityQuestionForUser(email) {
   try {
-    return fetch(`http://localhost:5000/getSecurityQuestionForUser`, {
+    return fetch(`http://localhost:5000/securityQuestionForUser`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email
-      }),
-      headers: { email: email, "Content-Type": "application/json" }
+      })
     });
   } catch (err) {
     console.log(err);
@@ -247,7 +246,7 @@ export {
   verify,
   setSecurityQuestion,
   getSecurityQuestions,
-  getSecurityQuestionForUser,
+  securityQuestionForUser,
   submitSecurityQuestionAnswer,
   resetPassword,
   changePassword,

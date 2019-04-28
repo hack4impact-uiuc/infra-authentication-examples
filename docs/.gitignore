@@ -1,4 +1,7 @@
 node_modules
+.next
+yarn.lock
+package-lock.json
 .env
 .docz
 package-lock.json
@@ -6,4 +9,3 @@ yarn-error.log
 .DS_Store
 lib
 yarn.lock
-

@@ -6,8 +6,7 @@ router.post("/changePassword", async function(req, res) {
   const results = await fetch("http://localhost:8000/changePassword", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      token: req.headers.token
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
       currentPassword: req.body.currentPassword,
