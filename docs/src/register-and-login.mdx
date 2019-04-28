@@ -7,10 +7,10 @@ route: /register-and-login-workflow
 
 ## Register Endpoint
 
-
 | Endpoint | /register [POST] |
 | ------ | ----------- |
 | Body   | email, password, role,  index of security question in config file (optional), answer to security question (optional)  |
+
 | Response 200 | userid, role, and token |
 | Response 400 | error message |
 
@@ -47,7 +47,15 @@ route: /register-and-login-workflow
 
 
 
+
 ## Login Endpoint
+
+### /POST yourserver.org/login
+
+    body: {
+        email: "whodatboy@h4i.org",
+        password: "me"
+    }
 
 | Endpoint | /login [POST] |
 | ------ | ----------- |
