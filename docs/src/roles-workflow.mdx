@@ -49,9 +49,11 @@ route: /roles-workflow
 
 (3) If it is a google user, it makes a request to the google API using the token and fetches the email. If the user is in the database it finds it or returns an error message. 
 
-(4) Find the user that is being promoted and he or she is in the database
+(4) Check that the user is verified, and if not return an error message
+
+(5) Find the user that is being promoted and he or she is in the database
    
-(5) If the current user has the correct permission level, promote the user or send a corresponding success or error message
+(6) If the current user has the correct permission level, promote the user or send a corresponding success or error message
 
 
 ### Example Request 
@@ -70,4 +72,17 @@ route: /roles-workflow
 
 
 ## Integrating with the client and API
+
+On the client side there needs be a way to 
+
+(1) See all the clients that that specific user can promote/demote, which can be fetched using /roles
+
+(2) Promote/Demote a user by selecting the user, the role you want to promote them to, and a place for you to confirm your passwword /roleschange
+
+An example of this page can be found at https://github.com/hack4impact-uiuc/infra-authentication-examples/blob/master/nextjs-client-example/pages/roles.js
+
+<img src={require('./workflow-images/roles.png')} style={{maxWidth:600}}></img>
+
+The API endpoints just redirect the request to the authentication server. Examples of what this looks like with an express server can be found at 
+https://github.com/hack4impact-uiuc/infra-authentication-examples/tree/41d5c4665edb6a0ed2ee6e02bd9e0124ea654190/express-api-example/src/api
 

@@ -106,3 +106,22 @@ route: /profile-workflow
 
 ## Integrating with the client and API
 
+On the client side, there needs to be a way to 
+
+(1) Display the user information from /getUser
+
+(2) Enter in your current and new password to change the password to /changePassword
+
+(3) Enter your password, a new security question, and answer to /updateSecurityQuestion
+
+Examples of the client can be found at 
+https://github.com/hack4impact-uiuc/infra-authentication-examples/blob/41d5c4665edb6a0ed2ee6e02bd9e0124ea654190/nextjs-client-example/pages/profile.js
+
+And would look something like this picture below
+<img src={require('./workflow-images/profile-1.png')} style={{maxWidth:275}}></img>
+<img src={require('./workflow-images/profile-2.png')} style={{maxWidth:275}}></img>
+<img src={require('./workflow-images/profile-3.png')} style={{maxWidth:275}}></img>
+
+
+The API endpoints just redirect the request to the authentication server. Examples of what this looks like with an express server can be found at 
+https://github.com/hack4impact-uiuc/infra-authentication-examples/tree/41d5c4665edb6a0ed2ee6e02bd9e0124ea654190/express-api-example/src/api

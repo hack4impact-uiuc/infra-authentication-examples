@@ -120,3 +120,20 @@ route: /register-and-login-workflow
 
 ## Integrating with the client and API
 
+On the client side, we want to have a register and login pages in which a user can either
+
+(1) Register a new account, entering all the necessary information, and sending a request to \register
+
+(2) Logging in to their account using their email and password using \login
+
+(3) Choose to login or register using google, sending a request to \google
+
+Examples of the client side of the register and login pages can be found at https://github.com/hack4impact-uiuc/infra-authentication-examples/blob/master/nextjs-client-example/pages/register.js
+and https://github.com/hack4impact-uiuc/infra-authentication-examples/blob/master/nextjs-client-example/pages/login.js, and would look like the pictures below. 
+
+<img src={require('./workflow-images/register.png')} style={{maxWidth:250}}></img>
+
+<img src={require('./workflow-images/login.png')} style={{maxWidth:300}}></img>
+
+For the API you can redirect the login requests, but for register, after the authentication server registers the user, you should also register the user into whatever database you deicde to use. The register end point will return a authentcation id, email, and role, which you can add to your own model. This allows you to choose whatever tech stack you want while keeping the models in sync. 
+Examples of the API can be found at https://github.com/hack4impact-uiuc/infra-authentication-examples/tree/master/express-api-example

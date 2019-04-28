@@ -100,3 +100,26 @@ route: /verify-workflow
 
 ## Integrating with the client and API
 
+
+On the client side, you want to be able to
+
+(1) Resend the verification email
+
+(2) Enter the pin from the verification email to verify your account
+
+This should be a step during the registration process, but since it has a skip later option you should also be able to do it on your profile 
+
+Am example of this feature can be found on https://github.com/hack4impact-uiuc/infra-authentication-examples/blob/master/nextjs-client-example/pages/roles.js and https://github.com/hack4impact-uiuc/infra-authentication-examples/blob/master/nextjs-client-example/pages/profile.js
+
+<img src={require('./workflow-images/verify.png')} style={{maxWidth:400}}></img>
+
+
+You also need to be able to verify all the pages on your application. This means using the ```/verify``` end point to ensure the user has credentials to access the page. 
+
+(3) You can implememt a higher order react component as shown in https://github.com/hack4impact-uiuc/infra-authentication-examples/blob/master/nextjs-client-example/components/withAuth.js which will only render the page if the token is authenticated by the \verify endpoint. Since the tokens are refreshed every hour, this higher order component can also reset the updated token in cookies every time the token gets updated. 
+
+(4) You should also modify all your authenticated backend endpoints to also get the token in the header, and then send a request to \verify. It will return whether or not the token and user are valid, but also the permission levels so you know how much access to grant  that individual. We HIGHLY recommend you send a request to \verify with the token in every endpoint that needs to be authenticated.
+
+
+
+

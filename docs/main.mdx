@@ -38,7 +38,27 @@ If the password is forgotten, it will either ask the user a preset security ques
 ### (6) Google Integration
 A user can either choose to register with their gmail accounts or enter in their information 
 
+### (7) Compatibility
+Since the authentication server is independent, it is compatible withh any framework, language, or database you choose to run on your backend. 
+
 
 
 # Getting Started
 
+
+There are examples of a client and API on https://github.com/hack4impact-uiuc/infra-authentication-examples
+And there is a authentication server on https://github.com/hack4impact-uiuc/infra-authentication-server
+By following the README's on both the repositories and running it locally, you can test out the features of the authentication sever 
+
+To deploy your own authentication server with your own credentials, use the commands below to install the cli tool and then walk through the setup process of creating your authentication server. This will help you generate your configuration file, generate your keys, and deploy your authentication server. 
+
+```
+npm i -g auth-infra
+auth-infra setup
+```
+
+Once set up, you can either run it locally using ```npm run start``` along with the examples in https://github.com/hack4impact-uiuc/infra-authentication-examples to test the features out. 
+
+The deployment instructions are on the readme for https://github.com/hack4impact-uiuc/infra-authentication-server
+
+The next setps would be looking at the workflow pages, understanding how the endpoints work, and following the integration guide's beneath to integrate the features you want into your application. 
