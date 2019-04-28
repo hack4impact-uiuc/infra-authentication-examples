@@ -199,9 +199,11 @@ export default class extends Component {
                     isOpen={this.state.dropdownOpen}
                     toggle={this.toggle}
                   >
-                    <DropdownToggle caret>
+
+                    <p>Security Question   
+                    <DropdownToggle nav caret >
                       {this.state.questionIdx === -1
-                        ? "Security Question"
+                        ? "Pick a question"
                         : this.state.questions[this.state.questionIdx]}
                     </DropdownToggle>
                     <DropdownMenu>
@@ -213,6 +215,7 @@ export default class extends Component {
                         </DropdownItem>
                       ))}
                     </DropdownMenu>
+                    </p> 
                   </Dropdown>
                   <Label for="exampleEmail">Answer</Label>
                   <Input
@@ -247,16 +250,16 @@ export default class extends Component {
                 <br />
                 <p style={{ color: "red" }}>{this.state.errorMessage}</p>
               </Form>
+              <GoogleLogin
+                className="btn-lg sign-in-btn"
+                clientId="992779657352-2te3be0na925rtkt8kt8vc1f8tiph5oh.apps.googleusercontent.com"
+                responseType="id_token"
+                buttonText={this.props.role}
+                scope="https://www.googleapis.com/auth/userinfo.email"
+                onSuccess={this.handleGoogle}
+              />
             </CardBody>
           </Card>
-          <GoogleLogin
-            className="btn sign-in-btn"
-            clientId="992779657352-2te3be0na925rtkt8kt8vc1f8tiph5oh.apps.googleusercontent.com"
-            responseType="id_token"
-            buttonText={this.props.role}
-            scope="https://www.googleapis.com/auth/userinfo.email"
-            onSuccess={this.handleGoogle}
-          />
         </div>
       ) : (
         <Card

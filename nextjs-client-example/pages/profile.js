@@ -24,7 +24,8 @@ import {
   Input,
   Card,
   CardBody,
-  Row
+  Row,
+  CardTitle
 } from "reactstrap";
 import { setCookie, getCookie } from "./../utils/cookie";
 
@@ -79,7 +80,6 @@ class ProfilePage extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     if (this.state.questionIdx !== -1 && this.state.answer.trim().length > 0) {
-      
       const result = await setSecurityQuestion(
         this.state.questionIdx,
         this.state.answer,
@@ -165,151 +165,107 @@ class ProfilePage extends Component {
         {this.state.verificationMessage && (
           <Alert color="primary">{this.state.verificationMessage}</Alert>
         )}
-        {this.state.info && (
-          <ul>
-            <li>Email: {this.state.info.email}</li>
-            <li>Role: {this.state.info.role}</li>
-            <li>
-              Verification: You are{" "}
-              {this.state.info.verification &&
-              String(this.state.info.verification) == "true"
-                ? ""
-                : "not "}
-              verified
-            </li>
-          </ul>
-        )}
 
-        {getCookie("google") ? (
-          <p> You are a Google user :) </p>
-        ) : (
-          <Row>
-            <Card
+        <Card
+          className="interview-card"
+          style={{ width: "25%", padding: "2%" }}
+        >
+          <CardTitle>
+            <h2 style={{ textAlign: "center", paddingTop: "10px" }}>
+              Profile{" "}
+            </h2>
+
+            <div
               className="interview-card"
-              style={{ width: "400px", height: "60%" }}
+              style={{
+                width: "400px",
+                height: "60%",
+                marginLeft: "10%",
+                marginRighht: "10%"
+              }}
             >
-              <CardBody>
-                <Form>
-                  <FormGroup>
-                    {!!this.state.questions ? (
-                      <Dropdown
-                        isOpen={this.state.dropdownOpen}
-                        toggle={this.toggle}
-                      >
-                        <DropdownToggle caret>
-                          {this.state.questionIdx === -1
-                            ? "Security Question"
-                            : this.state.questions[this.state.questionIdx]}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          {this.state.questions.map((question, idx) => (
-                            <DropdownItem
-                              onClick={this.pickDropDown.bind(null, idx)}
-                            >
-                              {question}
-                            </DropdownItem>
-                          ))}
-                        </DropdownMenu>
-                      </Dropdown>
-                    ) : null}
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Answer</Label>
-                    <Input
-                      name="answer"
-                      maxLength="128"
-                      value={this.state.answer}
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Confirm Password</Label>
-                    <Input
-                      name="securityPassword"
-                      type="password"
-                      maxLength="128"
-                      value={this.state.securityPassword}
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </FormGroup>
-                  <Button
-                    color="success"
-                    size="lg"
-                    onClick={this.handleSubmit}
-                    style={{ float: "left", width: "100%" }}
-                  >
-                    Set Security Question
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-            <Card
-              className="interview-card"
-              style={{ width: "400px", height: "60%" }}
-            >
-              <CardBody>
-                <Form>
-                  <FormGroup>
-                    <Label>Old Password</Label>
-                    <Input
-                      name="oldPassword"
-                      type="password"
-                      maxLength="128"
-                      value={this.state.oldPassword}
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>New Password</Label>
-                    <Input
-                      name="newPassword1"
-                      type="password"
-                      maxLength="128"
-                      value={this.state.newPassword1}
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label>Confirm Password</Label>
-                    <Input
-                      name="newPassword2"
-                      type="password"
-                      maxLength="128"
-                      value={this.state.newPassword2}
-                      onChange={this.handleChange}
-                      required
-                    />
-                  </FormGroup>
-                  <Button
-                    color="success"
-                    size="lg"
-                    onClick={this.handlePassChange}
-                    style={{ float: "left", width: "100%" }}
-                  >
-                    Change Password
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-            {this.state.info &&
-            this.state.info.verification &&
-              String(this.state.info.verification) == "true" ? null : (
-              <Card
+              {this.state.info && (
+                <div>
+                  <br />
+                  <p>Email: {this.state.info.email}</p>
+                  <p>Role: {this.state.info.role}</p>
+                  <p>
+                    Verification: You are{" "}
+                    {this.state.info.verification &&
+                    this.state.info.verification == "true"
+                      ? ""
+                      : "not "}
+                    verified
+                  </p>
+                </div>
+              )}
+            </div>
+          </CardTitle>
+
+          {getCookie("google") ? (
+            <p> You are a Google user :) </p>
+          ) : (
+            <Row>
+              <div
                 className="interview-card"
-                style={{ width: "400px", height: "60%" }}
+                style={{
+                  width: "400px",
+                  height: "60%",
+                  marginLeft: "5%",
+                  marginRighht: "5%"
+                }}
               >
+                <CardTitle>
+                  <h4 style={{ textAlign: "center", paddingTop: "10px" }}>
+                    Reset Security Question{" "}
+                  </h4>
+                </CardTitle>
+
                 <CardBody>
                   <Form>
                     <FormGroup>
-                      <Label>Verification Pin</Label>
+                      {!!this.state.questions ? (
+                        <p>
+                          Security Question
+                          <Dropdown
+                            isOpen={this.state.dropdownOpen}
+                            toggle={this.toggle}
+                          >
+                            <DropdownToggle nav caret>
+                              {this.state.questionIdx === -1
+                                ? "Pick a question"
+                                : this.state.questions[this.state.questionIdx]}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              {this.state.questions.map((question, idx) => (
+                                <DropdownItem
+                                  onClick={this.pickDropDown.bind(null, idx)}
+                                >
+                                  {question}
+                                </DropdownItem>
+                              ))}
+                            </DropdownMenu>
+                          </Dropdown>
+                        </p>
+                      ) : null}
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Answer</Label>
                       <Input
-                        name="pin"
+                        name="answer"
                         maxLength="128"
-                        value={this.state.pin}
+                        value={this.state.answer}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Confirm Password</Label>
+                      <Input
+                        name="securityPassword"
+                        type="password"
+                        maxLength="128"
+                        value={this.state.securityPassword}
                         onChange={this.handleChange}
                         required
                       />
@@ -317,25 +273,126 @@ class ProfilePage extends Component {
                     <Button
                       color="success"
                       size="lg"
-                      onClick={this.handleEmail}
-                      style={{ float: "left", width: "49%" }}
+                      onClick={this.handleSubmit}
+                      style={{ float: "left", width: "100%" }}
                     >
-                      Resend Email
-                    </Button>
-                    <Button
-                      color="success"
-                      size="lg"
-                      onClick={this.handlePin}
-                      style={{ float: "right", width: "49%" }}
-                    >
-                      Submit Pin
+                      Set Security Question
                     </Button>
                   </Form>
                 </CardBody>
-              </Card>
-            )}
-          </Row>
-        )}
+              </div>
+              <div
+                className="interview-card"
+                style={{
+                  width: "400px",
+                  height: "60%",
+                  marginLeft: "5%",
+                  marginRighht: "5%"
+                }}
+              >
+                <CardTitle>
+                  <h4 style={{ textAlign: "center", paddingTop: "20px" }}>
+                    Reset Password{" "}
+                  </h4>
+                </CardTitle>
+                <CardBody>
+                  <Form>
+                    <FormGroup>
+                      <Label>Old Password</Label>
+                      <Input
+                        name="oldPassword"
+                        type="password"
+                        maxLength="128"
+                        value={this.state.oldPassword}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>New Password</Label>
+                      <Input
+                        name="newPassword1"
+                        type="password"
+                        maxLength="128"
+                        value={this.state.newPassword1}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Confirm Password</Label>
+                      <Input
+                        name="newPassword2"
+                        type="password"
+                        maxLength="128"
+                        value={this.state.newPassword2}
+                        onChange={this.handleChange}
+                        required
+                      />
+                    </FormGroup>
+                    <Button
+                      color="success"
+                      size="lg"
+                      onClick={this.handlePassChange}
+                      style={{ float: "left", width: "100%" }}
+                    >
+                      Change Password
+                    </Button>
+                  </Form>
+                </CardBody>
+              </div>
+              {this.state.info &&
+              this.state.info.verification &&
+              this.state.info.verification == "true" ? null : (
+                <div
+                  className="interview-card"
+                  style={{
+                    width: "400px",
+                    height: "60%",
+                    marginLeft: "5%",
+                    marginRighht: "5%"
+                  }}
+                >
+                  <CardTitle>
+                    <h4 style={{ textAlign: "center", paddingTop: "20px" }}>
+                      Verify Email {" "}
+                    </h4>
+                  </CardTitle>
+                  <CardBody>
+                    <Form>
+                      <FormGroup>
+                        <Label>Verification Pin</Label>
+                        <Input
+                          name="pin"
+                          maxLength="128"
+                          value={this.state.pin}
+                          onChange={this.handleChange}
+                          required
+                        />
+                      </FormGroup>
+                      <Button
+                        color="success"
+                        size="lg"
+                        onClick={this.handleEmail}
+                        style={{ float: "left", width: "49%" }}
+                      >
+                        Resend Email
+                      </Button>
+                      <Button
+                        color="success"
+                        size="lg"
+                        onClick={this.handlePin}
+                        style={{ float: "right", width: "49%" }}
+                      >
+                        Submit Pin
+                      </Button>
+                    </Form>
+                  </CardBody>
+                </div>
+              )}
+            </Row>
+          )}
+        </Card>
       </div>
     );
   }
