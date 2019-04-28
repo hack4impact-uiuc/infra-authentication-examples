@@ -9,7 +9,8 @@ router.post("/google", async function(req, res) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      tokenId: req.body.tokenId
+      tokenId: req.body.tokenId, 
+      role: req.body.role
     })
   });
   const parsed = await results.json();

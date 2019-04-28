@@ -85,27 +85,31 @@ route: /register-and-login-workflow
 
 | Endpoint | /login [POST] |
 | ------ | ----------- |
-| Body   | email, password |
+| Body   | tokeId, role |
 | Response 200 | userid, role, and token |
 | Response 400 | error message |
 
-(1) Checks that the request has the required fields (email, password) 
+(1)Check that there is a tokenId in the body of the request
 
-(2) Find a user with the associated email and check that he/she isn't a google user
+(2) Check that google has been enabled
 
-(3) Compares the encrypted passwords and either returns the appropriate error message or a a success status along with the user's token, id, and permission level
- 
+(3) Sends the tokenId to the Google API to get  the payload, which conatins the user's email
+
+(4) If a user already exists with this email and is a google user it responds withh a success message.
+
+(5) Respond with an error message if the user is not a google user
+
+(6) Creates a new user with that email, role, no password, and with google authentication set the true, and sends a success message
+
 
 ### Example Request 
-
-
-    url: "http://localhost:8000/login"
+    url: "http://localhost:8000/google"
     headers: {
         "Content-Type":"application/json",
     }
     body: {
-        "email":"whodatboy@h4i.org",
-        "password":"me",
+        "tokenId":"JRRTolkien",
+        "role":"guest",
     }
 
 

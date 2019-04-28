@@ -182,11 +182,11 @@ function google(tokenId) {
     return fetch(`http://localhost:5000/google`, {
       method: "POST",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        tokenId: tokenId
+        tokenId: tokenId, 
+        role: "guest",
       })
     });
   } catch (err) {
