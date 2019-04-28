@@ -42,7 +42,6 @@ class ForgotPasswordPage extends Component {
 
   handleGetSecurityQuestion = async e => {
     e.preventDefault();
-    console.log("HHERE");
     console.log(this.state.email);
     const result = await getSecurityQuestionForUser(this.state.email);
     const resp = await result.json();
@@ -93,7 +92,7 @@ class ForgotPasswordPage extends Component {
   render = () => (
     <div>
       {this.state.errorMessage !== "" && (
-        <Alert color="danger">{this.state.errorMessage}</Alert>
+        <Alert color="primary">{this.state.errorMessage}</Alert>
       )}
       {this.state.submitNewPassword ? (
         <Card
