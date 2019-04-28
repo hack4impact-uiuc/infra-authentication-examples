@@ -26,7 +26,8 @@ route: /profile-workflow
     url: "http://localhost:8000/getUser"
     headers: {
         "Content-Type":"application/json",
-        "token": "JRRTolkien"
+        "token": "JRRTolkien",
+        "google": "true" // only set to true if it is a google user, optional field or false otherwise
     }
 
 
@@ -36,26 +37,66 @@ route: /profile-workflow
 | ------ | ----------- |
 | Header   | token |
 | Body   | currentPassword, newPassword |
-| Response 200 | success message, user_email, user_verified, user_role, and user_id |
+| Response 200 | success message, token |
 | Response 400 | error message |
 
-(1) Check i
 
-(1) Return an error message if the token isn't sent
+(1) Checks that the token is in the header and the currentPassword and newPassword are in the body of the request. 
 
-(2) If it isn't a google user, verifies the token and checks that the user exists
+(2) Verifies the token and checks that the user is registered
 
-(3) If it is a google user, makes a request to the google API with the token to get the user's email, and then checks if a user with that email exists.
+(2) Verifies that the current password is correct or sends the appropriate error message. 
 
-(4) Returns the email, verification status, role, and id for the user found
+(3) Updates the password in the database, and sends an email to confirm the password change if gmail is enabled
+
+(4) Sends a success message along with the new token.
+
 
 ### Example Request 
     
     url: "http://localhost:8000/getUser"
     headers: {
         "Content-Type":"application/json",
-        "token": "JRRTolkien"
+        "token": "JRRTolkien", 
+        "google": "true" // only set to true if it is a google user, optional field or false otherwise
+    }
+    body: {
+        "currentPassword":"lol1234",
+        "newPassword":"lol1234"
     }
 
-## Set Security Question Endpoint
+
+## Add Security Question Endpoint
+
+| Endpoint | /updateSecurityQuestion [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Body   | index of security question in config file (optional), answer to security question (optional), passwword  |
+| Response 200 | success message |
+| Response 400 | error message |
+
+
+(1) Checks that the token is in the header and the questionIdx, answer, and passwword are in the body of the request. 
+
+(2)Verifies the token and checks that the user is registered and is not a google user
+
+(2) Verifies that the current password is correct or sends the appropriate error message. 
+
+(3) Finds the corresponding question using the questionIndex
+
+(4) Updates the user model with the security question and answer, and returns a corresponding success or failure message
+
+ ### Example Request 
+    
+    url: "http://localhost:8000/updateSecurityQuestion"
+    headers: {
+        "Content-Type":"application/json",
+        "token": "JRRTolkien", 
+        "google": "true" // only set to true if it is a google user, optional field or false otherwise
+    }
+    body: {
+        "currentPassword":"lol1234",
+        "newPassword":"lol1234"
+    }
+
 

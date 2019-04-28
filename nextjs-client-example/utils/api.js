@@ -60,7 +60,7 @@ function getSecurityQuestions() {
 }
 function setSecurityQuestion(questionIdx, answer, password) {
   try {
-    return fetch(`http://localhost:5000/addSecurityQuestionAnswer`, {
+    return fetch(`http://localhost:5000/updateSecurityQuestion`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
