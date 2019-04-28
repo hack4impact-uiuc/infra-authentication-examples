@@ -110,9 +110,9 @@ class ProfilePage extends Component {
       );
       const response = await result.json();
       if (!response.token) {
-        this.setState({ responseMessage: response.message });
+        this.setState({ responseMessage: response.message, verificationMessage: null });
       } else {
-        this.setState({ responseMessage: response.message });
+        this.setState({ responseMessage: response.message, verificationMessage: null  });
         setCookie("token", response.token);
       }
     } else {
@@ -124,7 +124,7 @@ class ProfilePage extends Component {
     e.preventDefault();
     const result = await resendPIN();
     const resp = await result.json();
-    this.setState({ verificationMessage: resp.message });
+    this.setState({ verificationMessage: resp.message, responseMessage: null  });
   };
 
   handlePin = async e => {
@@ -132,7 +132,7 @@ class ProfilePage extends Component {
     if (this.state.pin.trim().length > 0) {
       const result = await verifyPIN(parseInt(this.state.pin));
       const resp = await result.json();
-      this.setState({ verificationMessage: resp.message });
+      this.setState({ verificationMessage: resp.message, responseMessage: null  });
       if (resp.status === 200) {
         this.setState({
           info: {
@@ -155,6 +155,7 @@ class ProfilePage extends Component {
             Successfully Submitted Security Question
           </Alert>
         )}
+
         {submittedSecurity && !successSubmitSecurity && (
           <Alert color="primary">Unable to Submit Security Question</Alert>
         )}

@@ -99,73 +99,24 @@ route: /register-and-login-workflow
 
 (5) Respond with an error message if the user is not a google user
 
-(6) Creates a new user with that email, role, no password, and with google authentication set the true, and sends a success message
+(6) If the config file allows the permissions to create a user with this role, it registers the google user. 
+
+(7) Creates a new user with that email, role, no password, and with google authentication set the true, and sends a success message
 
 
 ### Example Request 
-    url: "http://localhost:8000/google"
-    headers: {
-        "Content-Type":"application/json",
-    }
-    body: {
-        "tokenId":"JRRTolkien",
-        "role":"guest",
-    }
+    {
+      url: "http://localhost:8000/google"
+        headers: {
+            "Content-Type":"application/json",
+        }
+        body: {
+            "tokenId":"JRRTolkien",
+            "role":"guest",
+    }  
 
 
 
-## Resend Verification Endpoint
 
-### Resend the verification email to verify your account with a pin number
+## Integrating with the client and API
 
-| Endpoint | /resendEmail [POST] |
-| ------ | ----------- |
-| Header   | token |
-| Response 200 | success message |
-| Response 400 | error message |
-
-
-(1) If gmail is not enabled, it returns an error message
-
-(2) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
-
-(3) Will generate a pin and send it in an email to the user. Sends a success or error message based on if the email is succesfully sent. 
-
-### Example Request 
-
-    url: "http://localhost:8000/resendVerificationEmail"
-    headers: {
-        "Content-Type":"application/json",
-        "token": "JRRTolkien"
-    }
-
-
-## Verify Email Endpoint
-
-### Enter the pin emailed to the user to verify their email for their account
-
-| Endpoint | /verifyEmail [POST] |
-| ------ | ----------- |
-| Header   | token |
-| Body   | pin |
-| Response 200 | success message |
-| Response 400 | error message |
-
-(1) If gmail is not enabled, it returns an error message
-
-(2) Checks that the request has the required fields (pin) 
-
-(3) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
-
-(4) Will respond with the user succesfully verified if the pin matches, or an error message if it doesn't match. 
-
-### Example Request 
-    
-    url: "http://localhost:8000/resendVerificationEmail"
-    headers: {
-        "Content-Type":"application/json",
-        "token": "JRRTolkien"
-    }
-    body: {
-        pin: 92995525
-    }

@@ -6,9 +6,8 @@ route: /verify-workflow
 # Verify Workflow
 
 ## Verify Endpoint
-### erifies the token, and sends an updated JWT token if the encrypting token has been udapted
+### Verifies the token, and sends an updated JWT token if the encrypting token has been udapted
 
-# Verify
 | Endpoint | /verify [POST] |
 | ------ | ----------- |
 | Body   | tokenId |
@@ -28,3 +27,76 @@ route: /verify-workflow
 (4) Check if the token has been refreshed, and if so regenerate a JWT token and return it along with the user's role, autheid, and verification status
 
 (5) Otherwise send a success message just return the user's role, authenticationId, and email verification status
+
+### Example Request 
+    {
+        url: "http://localhost:8000/verify"
+        headers: {
+            "Content-Type":"application/json",
+            "token": "JRRTolkien"
+    }
+
+
+
+## Resend Verification Endpoint
+
+### Resend the verification email to verify your account with a pin number
+
+| Endpoint | /resendEmail [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Response 200 | success message |
+| Response 400 | error message |
+
+
+(1) If gmail is not enabled, it returns an error message
+
+(2) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
+
+(3) Will generate a pin and send it in an email to the user. Sends a success or error message based on if the email is succesfully sent. 
+
+### Example Request 
+
+    {
+        url: "http://localhost:8000/resendVerificationEmail"
+        headers: {
+            "Content-Type":"application/json",
+            "token": "JRRTolkien"
+    }
+
+
+## Verify Email Endpoint
+
+### Enter the pin emailed to the user to verify their email for their account
+
+| Endpoint | /verifyEmail [POST] |
+| ------ | ----------- |
+| Header   | token |
+| Body   | pin |
+| Response 200 | success message |
+| Response 400 | error message |
+
+(1) If gmail is not enabled, it returns an error message
+
+(2) Checks that the request has the required fields (pin) 
+
+(3) Verify that the token is valid and the user exists in the database. Will return you an error message if the user is already verified 
+
+(4) Will respond with the user succesfully verified if the pin matches, or an error message if it doesn't match. 
+
+### Example Request 
+    
+    {
+        url: "http://localhost:8000/resendVerificationEmail"
+        headers: {
+            "Content-Type":"application/json",
+            "token": "JRRTolkien"
+        }
+        body: {
+            pin: 92995525
+        }
+    }
+    
+
+## Integrating with the client and API
+
