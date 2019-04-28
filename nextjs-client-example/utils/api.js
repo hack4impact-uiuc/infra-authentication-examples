@@ -82,10 +82,10 @@ function getSecurityQuestionForUser(email) {
   try {
     return fetch(`http://localhost:5000/getSecurityQuestionForUser`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email
-      }),
-      headers: { email: email, "Content-Type": "application/json" }
+      })
     });
   } catch (err) {
     console.log(err);
